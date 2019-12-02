@@ -6,19 +6,27 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <p>Logo</p>
+        <nav>
+          <ul>
+            <li>Link fake 1</li>
+            <li>Link fake 2</li>
+            <li>Link fake 3</li>
+            <li>Link fake 4</li>
+          </ul>
+        </nav>
       </header>
+
+      <div className='container'>
+        <button className='btn_hotspot'>Create Hotspot</button>
+        <div className='list'>
+          <span className='title'>List of hotspots</span>
+          <span className='item'>Hotspot#1</span>
+        </div>
+      <div>
+
+      </div>
+      </div>
     </div>
   );
 }
