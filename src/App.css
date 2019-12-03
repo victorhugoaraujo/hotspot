@@ -18,6 +18,15 @@ header nav ul {
 nav > ul > li {
   list-style: none;
 }
+nav > ul > li > a{
+  padding: 10px;
+}
+
+nav > ul > li a:focus,
+nav > ul > li a:hover {
+  background-color: rgba(0, 168, 255,0.4)
+  
+}
 .container {
   display: flex;
   align-items: center;
@@ -28,6 +37,7 @@ nav > ul > li {
 .btn_hotspot {
   background-color: #12c1c7;
   border-radius: 25px;
+  border-color: #12c1c7;
   height: 40px;
   width: 200px;
   padding: 12px 25px;
@@ -37,12 +47,16 @@ nav > ul > li {
   margin-bottom: 30px;
 }
 
+.btn_hotspot:focus{
+  outline: none;
+}
+
 .list {
   width: 400px;
   height: auto;
-  background-color: red;
+  background-color: rgba(0, 255, 179, 0.685);
 }
-.list span{
+.list li{
   display: block;
   padding: 15px;
   padding-left: 5px;
