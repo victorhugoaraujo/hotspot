@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-// import Tooltip from './components/Tooltip';
+import Tooltip from './components/Tooltip';
 import useHover from './components/Hooks/use-hover';
 import './App.css';
 
@@ -20,9 +20,9 @@ function App() {
     ]);
   }
 
-  const getElementId = (event) => {
+  // const getElementId = (event) => {
 
-  }
+  // }
 
   const handleRemoveHotSpot = (name) => {
     setHotSpot(hotSpot.filter(item => item !== name));
@@ -44,7 +44,7 @@ function App() {
             <li>
               <a href='#' id='2' ref={hoverRef}>
                 Link fake 2
-                {/* <Tooltip elementId={} /> */}
+                {/* <Tooltip elementId={hoverRef} /> */}
               </a> 
             </li>
             <li id='3'>Link fake 3</li>

@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.css';
 
-const Tooltip = (elementId) => {
+const Tooltip = ({elementId}) => {
   return (<h1>{elementId}</h1>)
 }
 

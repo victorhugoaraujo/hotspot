@@ -1,6 +1,6 @@
 /* useHover */
 .hovered {
-  background-color: lightcoral !important;
+  background-color: lightblue;
 }
 
 .container {
@@ -11,7 +11,9 @@
   text-align: center;
   font-size: 5rem;
 }
-
+h1{
+  color: #000;
+}
 .sub-container {
   padding: 3rem !important;
   width: 5rem !important;
