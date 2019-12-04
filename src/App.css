@@ -22,12 +22,12 @@ nav > ul > li > a{
   padding: 10px;
 }
 
-nav > ul > li a:focus,
-nav > ul > li a:hover {
+nav > ul > li a:focus {
+/* nav > ul > li a:hover { */
   background-color: rgba(0, 168, 255,0.4)
   
 }
-.container {
+.containerList {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -38,7 +38,7 @@ nav > ul > li a:hover {
   background-color: #12c1c7;
   border-radius: 25px;
   border-color: #12c1c7;
-  height: 40px;
+  height: auto;
   width: 200px;
   padding: 12px 25px;
   color: #fff;
@@ -54,14 +54,24 @@ nav > ul > li a:hover {
 .list {
   width: 400px;
   height: auto;
-  background-color: rgba(0, 255, 179, 0.685);
+  border-bottom: 1px solid lightgray;
+  color: darkgray;
+  padding: 0 5px;
+  margin: 0;
 }
 .list li{
-  display: block;
+  display: flex;
   padding: 15px;
   padding-left: 5px;
+  justify-content: space-between;
 }
-
-.list .title{
-  background-color: gray;
+.list a{
+  cursor: pointer;
+  text-decoration: underline;
+  color: #00a8ff;
+}
+.title{
+  background-color: lightgray;
+  width: 100%;
+  padding: 10px 5px;
 }

@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+// import Tooltip from './components/Tooltip';
+import useHover from './components/Hooks/use-hover';
 import './App.css';
 
 function App() {
   const [hotSpot, setHotSpot] = useState([]);
-  const [createHotSpot, setCreateHotSpot] = useState('');
+  const [hoverRef] = useHover();
 
   const handleCreateHotSpot = () => {
     console.log('ola hotspot');
@@ -18,6 +20,14 @@ function App() {
     ]);
   }
 
+  const getElementId = (event) => {
+
+  }
+
+  const handleRemoveHotSpot = (name) => {
+    setHotSpot(hotSpot.filter(item => item !== name));
+  }
+
   console.log(hotSpot)
   return (
       <div className="App">
@@ -26,22 +36,24 @@ function App() {
         <nav>
           <ul>
             <li>
-              <a href='#' id='link1' onFocus={event => addHotSpot(event.target)}>
+              <a href='#' id='1' onFocus={event => addHotSpot(event.target)}>
                 Link fake 1
+                
               </a> 
             </li>
             <li>
-              <a href='#' id='link2' onMouseOver={event => addHotSpot(event.target)}>
+              <a href='#' id='2' ref={hoverRef}>
                 Link fake 2
+                {/* <Tooltip elementId={} /> */}
               </a> 
             </li>
-            <li id='link3'>Link fake 3</li>
-            <li id='link4'>Link fake 4</li>
+            <li id='3'>Link fake 3</li>
+            <li id='4'>Link fake 4</li>
           </ul>
         </nav>
       </header>
 
-      <div className='container'>
+      <div className='containerList'>
         <button 
           className='btn_hotspot'
           onClick={() => handleCreateHotSpot()}
@@ -49,11 +61,16 @@ function App() {
           Create Hotspot
         </button>
           <span className='title'>List of hotspots</span>
-        <ul className='list'>
-          {[...hotSpot].map((item, index) => (
-            <li key={index} className='item'>{item}</li>
-          ))}
-        </ul>
+          <ul className='list'>
+            {[...hotSpot].map((item, index) => (
+              <li key={index} className='item' name={item}>
+                <span>
+                  {`Hotspot#${item}`}
+                </span>
+                <a href='#' onClick={() => handleRemoveHotSpot(item)}>Delete</a>
+              </li>
+            ))}
+          </ul>
       <div>
 
       </div>
