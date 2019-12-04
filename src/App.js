@@ -5,7 +5,9 @@ import './App.css';
 
 function App() {
   const [hotSpot, setHotSpot] = useState([]);
-  const [hoverRef] = useHover();
+  // const [hoverRef] = useHover();
+  const [element, setElement] = useState('');
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const handleCreateHotSpot = () => {
     console.log('ola hotspot');
@@ -20,12 +22,23 @@ function App() {
     ]);
   }
 
-  // const getElementId = (event) => {
-
-  // }
+  const getElementId = (event) => {
+    setHotSpot([
+      ...setElement,
+      event.id
+    ]);
+  }
 
   const handleRemoveHotSpot = (name) => {
     setHotSpot(hotSpot.filter(item => item !== name));
+  }
+
+  handleMouseEnter = (index) => {
+    document.getElementById(`group-${index}`).classList.add('show');
+  }
+
+  handleMouseLeave = (index) => {
+    document.getElementById(`group-${index}`).classList.remove('show');
   }
 
   console.log(hotSpot)
@@ -42,15 +55,23 @@ function App() {
               </a> 
             </li>
             <li>
-              <a href='#' id='2' ref={hoverRef}>
+              <a
+                href='#'
+                id='2'
+                // onMouseEnter={() => setShowTooltip(true)}
+                onMouseEnter={event => getElementId(event.target)}
+                onMouseLeave={() => setShowTooltip(false)}
+              >
                 Link fake 2
-                {/* <Tooltip elementId={hoverRef} /> */}
               </a> 
             </li>
             <li id='3'>Link fake 3</li>
             <li id='4'>Link fake 4</li>
           </ul>
         </nav>
+        {showTooltip && (
+          <Tooltip element={...element} />
+        )}
       </header>
 
       <div className='containerList'>
