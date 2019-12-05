@@ -22,8 +22,8 @@ nav > ul > li > a{
   padding: 10px;
 }
 
-nav > ul > li a:focus {
-/* nav > ul > li a:hover { */
+/* nav > ul > li:focus, */
+nav > ul > li a.ishoved:hover {
   background-color: rgba(0, 168, 255,0.4)
   
 }

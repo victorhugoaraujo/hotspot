@@ -1,41 +1,37 @@
-import { useRef, useEffect } from 'react';
-import './styles.css';
+import { useState, useCallback, useRef } from "react";
 
+// Hook
 export default function useHover() {
-  const ref = useRef(null);
+  const [value, setValue] = useState(false);
+	
+  // Wrap in useCallback so we can use in dependencies below
+  const handleMouseOver = useCallback(() => setValue(true), []);
+  const handleMouseOut = useCallback(() => setValue(false), []);
 
-  const handleMouseOver = () => {
-    ref.current.classList.add('hovered');
-    const closestParentContainer = ref.current.parentNode.closest('.container');
+  // Keep track of the last node passed to callbackRef
+  // so we can remove its event listeners.
+  const ref = useRef();
+  
+  // Use a callback ref instead of useEffect so that event listeners
+  // get changed in the case that the returned ref gets added to
+  // a different element later. With useEffect, changes to ref.current
+  // wouldn't cause a rerender and thus the effect would run again.
+  const callbackRef = useCallback(
+    node => {
+      if (ref.current) {
+        ref.current.removeEventListener("mouseover", handleMouseOver);
+        ref.current.removeEventListener("mouseout", handleMouseOut);
+      }
 
-    if (closestParentContainer) {
-      closestParentContainer.classList.remove('hovered');
-    }
-  };
-  const handleMouseOut = () => {
-    ref.current.classList.remove('hovered');
+      ref.current = node;
 
-    const closestParentContainer = ref.current.parentNode.closest('.container');
-    if (closestParentContainer) {
-      closestParentContainer.classList.add('hovered');
-    }
-  };
-
-  useEffect(
-    () => {
-      const node = ref.current;
-      if (node) {
-        node.addEventListener('mouseenter', handleMouseOver);
-        node.addEventListener('mouseleave', handleMouseOut);
-
-        return () => {
-          node.removeEventListener('mouseenter', handleMouseOver);
-          node.removeEventListener('mouseleave', handleMouseOut);
-        };
+      if (ref.current) {
+        ref.current.addEventListener("mouseover", handleMouseOver);
+        ref.current.addEventListener("mouseout", handleMouseOut);
       }
     },
-    [ref.current]
+    [handleMouseOver, handleMouseOut]
   );
 
-  return [ref];
+  return [callbackRef, value];
 }
