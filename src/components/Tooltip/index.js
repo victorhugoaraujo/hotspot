@@ -2,7 +2,12 @@ import React from 'react';
 import './styles.css';
 
 const Tooltip = element => {
-return (<h1 style={{position: 'absolute', top: element.elementItemPositionX, left: element.elementItemPositionY}}>ola{element.name} {element.id}</h1>)
+return (
+  <div className='tooltiptext'
+  style={{ top: element.elementItemPositionX, left: element.elementItemPositionY}}>
+    <p>{element.tagName}#{element.id}</p>
+  </div>
+  )
 }
 
 export default Tooltip;

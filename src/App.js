@@ -12,8 +12,6 @@ function App() {
   const [create, setCreate] = useState(false);
 
   const addHotSpot = (target) => {
-    
-    console.log(hotSpot);
     if (create){
       setHotSpot([
         ...hotSpot,
@@ -24,16 +22,18 @@ function App() {
       ]);
       setCounter(counter => counter + 1);
     }
+    setCreate(false)
     return false
     
   }
 
   const getElementId = (target) => {
+    console.log(target)
     if (create){
-      console.log('oi')
       setElement({
         name: target.getAttribute('data-name'),
         id: target.id,
+        tagName: target.localName,
         elementItemPositionX: target.offsetHeight + target.offsetTop,
         elementItemPositionY: target.offsetLeft,
       });
@@ -47,8 +47,6 @@ function App() {
     setHotSpot(hotSpot.filter(item => item.hotSpotItemPosition !== value));
   }
 
-  // console.log(hotSpot)
-  console.log(showTooltip)
   return (
       <div className="App">
       <header className="App-header">
@@ -107,12 +105,14 @@ function App() {
       </header>
 
       <div>{showTooltip && (
-          <Tooltip {...element}></Tooltip>
+          <Tooltip {...element} className='tooltip'></Tooltip>
         )}</div>
 
       <div className='containerList'>
         <button 
           className='btn_hotspot'
+          disabled={create}
+          type="button"
           onClick={() => setCreate(true)}
         >
           Create Hotspot
