@@ -1,16 +1,15 @@
-// import {ADD_HOTSPOT} from '../actions/hotSpot';
+import {ADD_HOTSPOT} from '../actions/hotSpot';
 
-const initialState = {
-	hotSpot: [],
-};
-
-export default function hotSpot(state = initialState, action) {
+export default function hotSpot(state = [], action) {
     switch (action.type) {
-			case 'ADD_HOTSPOT':
-					return { 
-						...state,
-						hotSpot: [...state.hotSpot, action.hotSpot]
-				}
+			case ADD_HOTSPOT:
+					// return [ 
+					// 	...state,
+					// 	action.hotSpot
+					// ]
+					return [
+						...state, action.hotSpot,
+					]
 				
 			default:
 				return state;

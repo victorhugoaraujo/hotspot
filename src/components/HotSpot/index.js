@@ -6,23 +6,23 @@ import { addHotSpotAction } from '../../redux/actions/hotSpot';
 
 
 const HotSpot = () => {
-  const [hotSpot, setHotSpot] = useState([]);
+  // const [hotSpot, setHotSpot] = useState([]);
   const [showTooltip, setShowTooltip] = useState(false);
   const [element, setElement] = useState({});
   const [counter, setCounter] = useState(0);
   const [create, setCreate] = useState(false);
 
 	const dispatch = useDispatch();
-	const count = useSelector(state => state.hotSpot);
-	console.log(count)
+	const hotspot = useSelector(state => state.hotSpot);
+	console.log(hotspot)
 
-  const addHotSpot = hotSpot => {
-		if (create){
-			dispatch({
-				type: 'ADD_HOTSPOT',
-				hotSpot
-			})
-		}
+  // const addHotSpot = hotSpot => {
+	// 	if (create){
+	// 		dispatch({
+	// 			type: 'ADD_HOTSPOT',
+	// 			hotSpot
+	// 		})
+	// 	}
     // if (create){
     //   setHotSpot([
     //     ...hotSpot,
@@ -35,7 +35,7 @@ const HotSpot = () => {
     // }
     // setCreate(false)
     // return false
-  }
+  // }
 
   const getElementId = (target) => {
     if (create){
@@ -53,7 +53,7 @@ const HotSpot = () => {
   }
 
   const handleRemoveHotSpot = (value) => {
-    setHotSpot(hotSpot.filter(item => item.hotSpotItemPosition !== value));
+    // setHotSpot(hotSpot.filter(item => item.hotSpotItemPosition !== value));
   }
 
   return (
@@ -67,7 +67,7 @@ const HotSpot = () => {
                 id='1' 
                 href='#'
                 data-name='hotspot#1'
-                onClick={event => addHotSpot(event.target)}
+                // onClick={event => addHotSpot(event.target)}
                 onMouseEnter={event => getElementId(event.target)}
                 onMouseLeave={() => setShowTooltip(false)}
               >
@@ -80,12 +80,12 @@ const HotSpot = () => {
                 id='2' 
                 href='#'
                 data-name='hotspot#2'
-                onClick={event => addHotSpot(event.target.id)}
-								// onClick={event => dispatch({
-								// 	type: 'ADD_HOTSPOT',
-								// 	hotSpot: event.target.id,
-								// })}
-
+                onClick={event => create ? dispatch(
+                  addHotSpotAction({
+                    id: event.target.id,
+                    positionX: event.target.getBoundingClientRect().x,
+                    positionY: event.target.getBoundingClientRect().y,
+                  })) : null}
                 onMouseEnter={event => getElementId(event.target)}
                 onMouseLeave={() => setShowTooltip(false)}
               >
@@ -98,33 +98,18 @@ const HotSpot = () => {
                 id='3' 
                 href='#'
                 data-name='hotspot#3'
-                onClick={event => addHotSpot(event.target.id)}
+                onClick={event => create ? dispatch(
+                  addHotSpotAction({
+                    id: event.target.id,
+                    positionX: event.target.getBoundingClientRect().x,
+                    positionY: event.target.getBoundingClientRect().y,
+                  })) : null}
                 onMouseEnter={event => getElementId(event.target)}
                 onMouseLeave={() => setShowTooltip(false)}
               >
                 Link fake 3
               </a> 
             </li>
-            {/* <li>
-              <a
-                href='#'
-                id='2'
-                data-name='hotspot#2'
-                // onMouseEnter={() => setShowTooltip(true)}
-                onMouseEnter={event => getElementId(event.target)}
-                onMouseLeave={() => setShowTooltip(false)}
-              >
-                Link fake 2
-              </a> 
-            </li>
-            <li 
-              id='3'
-              data-name='hotspot#3'
-              onMouseEnter={event => getElementId(event.target.getAttribute('data-name'))}
-              onMouseLeave={() => setShowTooltip(false)}
-            >
-              Link fake 3</li>
-            <li id='4' ref={hoverRef}>Link fake 4</li> */}
           </ul>
         </nav>
         
@@ -145,10 +130,10 @@ const HotSpot = () => {
         </button>
           <span className='title'>List of hotspots</span>
           <ul className='list'>
-            {[...hotSpot].map((item, index) => (
+            {hotspot.map((item, index) => (
               <li key={index} className='item' name={item}>
                 <span>
-                  {`Hotspot#${item.hotSpotItemPosition}`}
+                  {`Hotspot#${item.id}`}
                 </span>
                 <a href='#' onClick={() => handleRemoveHotSpot(item.hotSpotItemPosition)}>Delete</a>
               </li>
