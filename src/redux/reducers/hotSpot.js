@@ -10,7 +10,8 @@ export default function hotSpot(state = [], action) {
 						action.hotSpot,
 					]
 			case REMOVE_HOTSPOT:
-				return state.filter(({id}) => id !== action.hotSpot);
+				console.log(action)
+				return state.filter(({number}) => number !== action.number);
 				
 			default:
 				return state;

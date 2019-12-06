@@ -94,3 +94,16 @@ header {
     width: 100%;
     padding: 10px 5px;
   }
+
+  .hovered {
+    background-color: rgba(192, 57, 43,0.4);
+    border: 1px solid #c0392b;
+  }
+
+  .dot{
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #2ecc71;
+  }

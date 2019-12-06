@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import ReactDOM from 'react-dom';
 import Tooltip from '../Tooltip';
 import './styles.css';
+import classnames from 'classnames'
 import { addHotSpotAction, removeHotSpotAction } from '../../redux/actions/hotSpot';
 
 
 const HotSpot = () => {
   // const [hotSpot, setHotSpot] = useState([]);
-  const [showTooltip, setShowTooltip] = useState(false);
+  const [hovered, setHovered] = useState();
   const [element, setElement] = useState({});
   const [counter, setCounter] = useState(0);
   const [create, setCreate] = useState(false);
@@ -36,6 +38,24 @@ const HotSpot = () => {
     // setCreate(false)
     // return false
   // }
+  function handleCreateDot(event){
+      return <div className='dot' style={{top: event.clientX, left: event.clientY}}></div>
+  }
+
+  const handleDispatch = (event) => {
+    if(create) {
+      dispatch(
+        addHotSpotAction({
+          id: event.target.id,
+          position: [
+            event.clientX,
+            event.clientY,
+          ],
+          number: hotspot.length,
+        }))
+      }
+      return null
+  }
 
   const getElementId = (target) => {
     if (create){
@@ -46,15 +66,11 @@ const HotSpot = () => {
         elementItemPositionX: target.offsetHeight + target.offsetTop,
         elementItemPositionY: target.offsetLeft,
       });
-      setShowTooltip(
-        true,
+      setHovered(
+        target.id,
       )
     }  
   }
-
-  // const handleRemoveHotSpot = (value) => {
-  //   // setHotSpot(hotSpot.filter(item => item.hotSpotItemPosition !== value));
-  // }
 
   return (
       <div className="App">
@@ -67,27 +83,44 @@ const HotSpot = () => {
                 id='1' 
                 href='#'
                 data-name='hotspot#1'
-                // onClick={event => addHotSpot(event.target)}
+                className={classnames({
+                  'hovered': hovered === '1'
+                })}
+                onClick={event => create ? dispatch(
+                  addHotSpotAction({
+                    id: event.target.id,
+                    position: [
+                      event.clientX,
+                      event.clientY,
+                    ],
+                    number: hotspot.length,
+                  })) : null}
                 onMouseEnter={event => getElementId(event.target)}
-                onMouseLeave={() => setShowTooltip(false)}
+                onMouseLeave={event => setHovered(null)}
               >
                 Link fake 1
                 
-              </a> 
+              </a>  
             </li>
             <li>
               <a 
                 id='2' 
                 href='#'
                 data-name='hotspot#2'
+                className={classnames({
+                  'hovered': hovered === '2'
+                })}
                 onClick={event => create ? dispatch(
                   addHotSpotAction({
                     id: event.target.id,
-                    positionX: event.target.getBoundingClientRect().x,
-                    positionY: event.target.getBoundingClientRect().y,
+                    position: [
+                      event.clientX,
+                      event.clientY,
+                    ],
+                    number: hotspot.length,
                   })) : null}
                 onMouseEnter={event => getElementId(event.target)}
-                onMouseLeave={() => setShowTooltip(false)}
+                onMouseLeave={event => setHovered(null)}
               >
                 Link fake 2
                 
@@ -98,14 +131,12 @@ const HotSpot = () => {
                 id='3' 
                 href='#'
                 data-name='hotspot#3'
-                onClick={event => create ? dispatch(
-                  addHotSpotAction({
-                    id: event.target.id,
-                    positionX: event.target.getBoundingClientRect().x,
-                    positionY: event.target.getBoundingClientRect().y,
-                  })) : null}
-                onMouseEnter={event => getElementId(event.target)}
-                onMouseLeave={() => setShowTooltip(false)}
+                className={classnames({
+                  'hovered': hovered === '3'
+                })}
+                onClick={(event) => {handleDispatch(event); handleCreateDot(event)}}
+                  onMouseEnter={event => getElementId(event.target)}
+                  onMouseLeave={event => setHovered(null)}
               >
                 Link fake 3
               </a> 
@@ -115,7 +146,7 @@ const HotSpot = () => {
         
       </header>
 
-      <div>{showTooltip && (
+      <div>{hovered && (
           <Tooltip {...element} className='tooltip'></Tooltip>
         )}</div>
 
@@ -133,10 +164,10 @@ const HotSpot = () => {
             {hotspot.map((item, index) => (
               <li key={index} className='item' name={item}>
                 <span>
-                  {`Hotspot#${item.id}`}
+                  {`Hotspot#${item.number}`}
                 </span>
                 <a href='#' onClick={() => dispatch(
-                  removeHotSpotAction(item.id)
+                  removeHotSpotAction(item.number)
                 )}>Delete</a>
               </li>
             ))}
