@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Tooltip from '../Tooltip';
 import './styles.css';
-import { addHotSpotAction } from '../../redux/actions/hotSpot';
+import { addHotSpotAction, removeHotSpotAction } from '../../redux/actions/hotSpot';
 
 
 const HotSpot = () => {
@@ -52,9 +52,9 @@ const HotSpot = () => {
     }  
   }
 
-  const handleRemoveHotSpot = (value) => {
-    // setHotSpot(hotSpot.filter(item => item.hotSpotItemPosition !== value));
-  }
+  // const handleRemoveHotSpot = (value) => {
+  //   // setHotSpot(hotSpot.filter(item => item.hotSpotItemPosition !== value));
+  // }
 
   return (
       <div className="App">
@@ -135,12 +135,13 @@ const HotSpot = () => {
                 <span>
                   {`Hotspot#${item.id}`}
                 </span>
-                <a href='#' onClick={() => handleRemoveHotSpot(item.hotSpotItemPosition)}>Delete</a>
+                <a href='#' onClick={() => dispatch(
+                  removeHotSpotAction(item.id)
+                )}>Delete</a>
               </li>
             ))}
           </ul>
       <div>
-
       </div>
       </div>
     </div>
