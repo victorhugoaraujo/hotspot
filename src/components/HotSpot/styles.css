@@ -6,6 +6,9 @@ header {
     height: 64px;
     border-bottom: 1px solid gray;
   }
+  article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+    display: flex;
+  }
   
   
   header nav ul {
@@ -98,12 +101,4 @@ header {
   .hovered {
     background-color: rgba(192, 57, 43,0.4);
     border: 1px solid #c0392b;
-  }
-
-  .dot{
-    position: absolute;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background-color: #2ecc71;
   }

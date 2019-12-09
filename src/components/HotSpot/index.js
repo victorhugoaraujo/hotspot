@@ -2,45 +2,20 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactDOM from 'react-dom';
 import Tooltip from '../Tooltip';
+import Dot from '../Dot';
 import './styles.css';
 import classnames from 'classnames'
 import { addHotSpotAction, removeHotSpotAction } from '../../redux/actions/hotSpot';
 
 
 const HotSpot = () => {
-  // const [hotSpot, setHotSpot] = useState([]);
   const [hovered, setHovered] = useState();
   const [element, setElement] = useState({});
-  const [counter, setCounter] = useState(0);
   const [create, setCreate] = useState(false);
 
 	const dispatch = useDispatch();
 	const hotspot = useSelector(state => state.hotSpot);
 	console.log(hotspot)
-
-  // const addHotSpot = hotSpot => {
-	// 	if (create){
-	// 		dispatch({
-	// 			type: 'ADD_HOTSPOT',
-	// 			hotSpot
-	// 		})
-	// 	}
-    // if (create){
-    //   setHotSpot([
-    //     ...hotSpot,
-    //   {
-    //     hotSpotId: target.id,
-    //     hotSpotItemPosition: counter,
-    //   }    
-    //   ]);
-    //   setCounter(counter => counter + 1);
-    // }
-    // setCreate(false)
-    // return false
-  // }
-  function handleCreateDot(event){
-      return <div className='dot' style={{top: event.clientX, left: event.clientY}}></div>
-  }
 
   const handleDispatch = (event) => {
     if(create) {
@@ -134,7 +109,7 @@ const HotSpot = () => {
                 className={classnames({
                   'hovered': hovered === '3'
                 })}
-                onClick={(event) => {handleDispatch(event); handleCreateDot(event)}}
+                onClick={(event) => {handleDispatch(event);}}
                   onMouseEnter={event => getElementId(event.target)}
                   onMouseLeave={event => setHovered(null)}
               >
@@ -146,9 +121,14 @@ const HotSpot = () => {
         
       </header>
 
-      <div>{hovered && (
-          <Tooltip {...element} className='tooltip'></Tooltip>
-        )}</div>
+      {/* Show hotspot information */}
+      <ul className='dotList'>
+          {hotspot.map(item => <Dot key={item.position} number={item.number} position={item.position}/>)}
+        </ul>
+
+      {hovered && (
+        <Tooltip {...element} className='tooltip'></Tooltip>
+      )}
 
       <div className='containerList'>
         <button 
@@ -172,6 +152,7 @@ const HotSpot = () => {
               </li>
             ))}
           </ul>
+        
       <div>
       </div>
       </div>
