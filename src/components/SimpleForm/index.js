@@ -1,16 +1,10 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-import { addHotSpotInfoAction } from '../../redux/actions/hotSpot';
+import { addHotSpotInfoAction, createHotSpotAction } from '../../redux/actions/hotSpot';
 
-
-
-const SimpleForm = ({props, number}) => {
+const SimpleForm = ({number}) => {
   const dispatch = useDispatch();
-  const hotspot = useSelector(state => state.hotSpot);
-
-  console.log(number)
-
   const [hotSpotTitle, setHotSpotTitle] = useState('');
   const [hotSpotText, setHotSpotText] = useState('');
 
@@ -30,15 +24,14 @@ const SimpleForm = ({props, number}) => {
         title: hotSpotTitle,
         text: hotSpotText,
       })
-    )
-    console.log(hotSpotTitle);
-    console.log(hotSpotText);
+    );
+    dispatch(createHotSpotAction(false))
   }
   
   return (
     <Form onSubmit={event => handleSubmit(event)}>
       <FormGroup>
-      <Label for="first_name">First Name</Label>
+      <Label for="info">HotSpot</Label>
       <Input 
         type="text"
         id="popoverTitle"
@@ -56,31 +49,12 @@ const SimpleForm = ({props, number}) => {
       </FormGroup>
       
       <div>
-        <Button color="primary" 
-        // disabled={pristine || submitting}
-        >
+        <Button color="primary">
           Submit
-        </Button>{" "}
-        <Button
-          color="primary"
-          // disabled={pristine || submitting}
-          // onClick={reset}
-        >
-          Clear
         </Button>
       </div>
     </Form>
   );
 };
-
-// const WrappedForm = reduxForm({
-//   form: "simple" // a unique identifier for this form
-// })(SimpleForm);
-
-// const mapStateToProps = state => ({
-//   initialValues: {
-//     firstName: "My name"
-//   }
-// });
 
 export default SimpleForm;

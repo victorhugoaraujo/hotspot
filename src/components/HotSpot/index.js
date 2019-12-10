@@ -4,19 +4,18 @@ import Tooltip from '../Tooltip';
 import Dot from '../Dot';
 import './styles.css';
 import classnames from 'classnames'
-import { addHotSpotAction, removeHotSpotAction } from '../../redux/actions/hotSpot';
+import { addHotSpotAction, removeHotSpotAction, createHotSpotAction } from '../../redux/actions/hotSpot';
 
 const HotSpot = () => {
   const [hovered, setHovered] = useState();
   const [element, setElement] = useState({});
-  const [create, setCreate] = useState(false);
 
 	const dispatch = useDispatch();
 	const hotspot = useSelector(state => state.hotSpot);
-	console.log(hotspot)
+	const creating = useSelector(state => state.createHotSpot.creating);
 
   const handleDispatch = (event) => {
-    if(create) {
+    if(creating) {
       dispatch(
         addHotSpotAction({
           id: event.target.id,
@@ -26,12 +25,11 @@ const HotSpot = () => {
           },
           number: hotspot.length,
         }))
-        setCreate(false)
       }
   }
 
   const getElementId = (target) => {
-    if (create){
+    if (creating){
       setElement({
         name: target.getAttribute('data-name'),
         id: target.id,
@@ -61,7 +59,7 @@ const HotSpot = () => {
                 })}
                 onClick={(event) => handleDispatch(event)}
                 onMouseEnter={event => getElementId(event.target)}
-                onMouseLeave={event => setHovered(null)}
+                onMouseLeave={() => setHovered(null)}
               >
                 Link fake 1
                 
@@ -77,7 +75,7 @@ const HotSpot = () => {
                 })}
                 onClick={(event) => handleDispatch(event)}
                 onMouseEnter={event => getElementId(event.target)}
-                onMouseLeave={event => setHovered(null)}
+                onMouseLeave={() => setHovered(null)}
               >
                 Link fake 2
                 
@@ -93,9 +91,24 @@ const HotSpot = () => {
                 })}
                   onClick={(event) => handleDispatch(event)}
                   onMouseEnter={event => getElementId(event.target)}
-                  onMouseLeave={event => setHovered(null)}
+                  onMouseLeave={() => setHovered(null)}
               >
                 Link fake 3
+              </a> 
+            </li>
+            <li>
+              <a 
+                id='4' 
+                href='#'
+                data-name='hotspot#3'
+                className={classnames({
+                  'hovered': hovered === '4'
+                })}
+                  onClick={(event) => handleDispatch(event)}
+                  onMouseEnter={event => getElementId(event.target)}
+                  onMouseLeave={() => setHovered(null)}
+              >
+                Link fake 4
               </a> 
             </li>
           </ul>
@@ -105,8 +118,8 @@ const HotSpot = () => {
 
       {/* Show hotspot information */}
       <ul className='dotList'>
-          {hotspot.map(item => <Dot key={item.number} number={item.number} position={item.position}/>)}
-        </ul>
+        {hotspot.map(item => <Dot key={item.number} number={item.number} position={item.position}/>)}
+      </ul>
 
       {hovered && (
         <Tooltip {...element} className='tooltip'></Tooltip>
@@ -115,9 +128,9 @@ const HotSpot = () => {
       <div className='containerList'>
         <button 
           className='btn_hotspot'
-          disabled={create}
+          disabled={creating}
           type="button"
-          onClick={() => setCreate(true)}
+          onClick={() => dispatch(createHotSpotAction(true))}
         >
           Create Hotspot
         </button>

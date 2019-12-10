@@ -1,17 +1,20 @@
 header {
-    /* background-color: #3A8EDD; */
-    /* color: #FFF; */
-    display: flex;
+    display: flex !important;
     justify-content: center;
+    align-items: center;
     height: 64px;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid lightgray;
   }
-  
+  header p {
+    margin: 0;
+  }
+
   header nav ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
     min-width: 400px;
+    margin: 0;
   }
   
   nav > ul > li {
@@ -53,10 +56,6 @@ header {
     font-weight: 500;
     line-height: 1.75;
     letter-spacing: 0.02857em;
-  
-  
-  
-  
   }
   .btn_hotspot:hover{
     background-color: rgb(23, 105, 170)

@@ -7,11 +7,14 @@ import HotSpot from './components/HotSpot';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { loadState, saveState } from './localStorage.js';
 
+// Load State from localStorage
 const persistedState = loadState();
 const store = createStore(reducer, persistedState, middleware);
 
+// Add state to localStorage
 store.subscribe(() => {
-  saveState(store.getState());
+  saveState({
+    hotSpot: store.getState().hotSpot});
 });
 
 function App() {

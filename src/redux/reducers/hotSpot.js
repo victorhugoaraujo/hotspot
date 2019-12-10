@@ -1,5 +1,4 @@
-import { ADD_HOTSPOT, ADD_HOTSPOT_INFO } from '../actions/hotSpot';
-import { REMOVE_HOTSPOT } from '../actions/hotSpot';
+import { ADD_HOTSPOT, ADD_HOTSPOT_INFO, REMOVE_HOTSPOT } from '../actions/hotSpot';
 
 export default function hotSpot(state = [], action) {
     switch (action.type) {
@@ -25,4 +24,4 @@ export default function hotSpot(state = [], action) {
 			default:
 				return state;
 		}
-  }
+	}
