@@ -1,0 +1,30 @@
+button.dot{
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px solid white;
+  background-color: lightcoral;
+  box-shadow: 0 0 0 1px #ff0000;
+  padding: 0;
+}
+button.dot:hover {
+  color: #fff;
+  background-color: #5a6268;
+  border-color: #545b62;
+  box-shadow: 0 0 0 0.2rem rgba(130,138,145,.5);
+}
+
+.popoverTitle {
+  font-size: 24px;
+  font-weight: 400;
+  min-width: 180px;
+}
+
+p.popoverText {
+  color:darkgray;
+  margin: 0;
+}
+
+
+
