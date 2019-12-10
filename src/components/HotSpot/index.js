@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ReactDOM from 'react-dom';
 import Tooltip from '../Tooltip';
 import Dot from '../Dot';
 import './styles.css';
 import classnames from 'classnames'
 import { addHotSpotAction, removeHotSpotAction } from '../../redux/actions/hotSpot';
-
 
 const HotSpot = () => {
   const [hovered, setHovered] = useState();
@@ -22,14 +20,14 @@ const HotSpot = () => {
       dispatch(
         addHotSpotAction({
           id: event.target.id,
-          position: [
-            event.clientX,
-            event.clientY,
-          ],
+          position: {
+            x: event.clientX,
+            y: event.clientY,
+          },
           number: hotspot.length,
         }))
+        setCreate(false)
       }
-      return null
   }
 
   const getElementId = (target) => {
@@ -61,15 +59,7 @@ const HotSpot = () => {
                 className={classnames({
                   'hovered': hovered === '1'
                 })}
-                onClick={event => create ? dispatch(
-                  addHotSpotAction({
-                    id: event.target.id,
-                    position: [
-                      event.clientX,
-                      event.clientY,
-                    ],
-                    number: hotspot.length,
-                  })) : null}
+                onClick={(event) => handleDispatch(event)}
                 onMouseEnter={event => getElementId(event.target)}
                 onMouseLeave={event => setHovered(null)}
               >
@@ -85,15 +75,7 @@ const HotSpot = () => {
                 className={classnames({
                   'hovered': hovered === '2'
                 })}
-                onClick={event => create ? dispatch(
-                  addHotSpotAction({
-                    id: event.target.id,
-                    position: [
-                      event.clientX,
-                      event.clientY,
-                    ],
-                    number: hotspot.length,
-                  })) : null}
+                onClick={(event) => handleDispatch(event)}
                 onMouseEnter={event => getElementId(event.target)}
                 onMouseLeave={event => setHovered(null)}
               >
@@ -109,7 +91,7 @@ const HotSpot = () => {
                 className={classnames({
                   'hovered': hovered === '3'
                 })}
-                onClick={(event) => {handleDispatch(event);}}
+                  onClick={(event) => handleDispatch(event)}
                   onMouseEnter={event => getElementId(event.target)}
                   onMouseLeave={event => setHovered(null)}
               >
@@ -123,7 +105,7 @@ const HotSpot = () => {
 
       {/* Show hotspot information */}
       <ul className='dotList'>
-          {hotspot.map(item => <Dot key={item.position} number={item.number} position={item.position}/>)}
+          {hotspot.map(item => <Dot key={item.number} number={item.number} position={item.position}/>)}
         </ul>
 
       {hovered && (
